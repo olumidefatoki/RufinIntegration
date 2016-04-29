@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="https://www.newconsole.smartmicrosystemsng.net/CellulantLive/transactionGate.svc?wsdl" uri="src/conf/xml-resources/web-service-references/transactionGate/wsdl/www.newconsole.smartmicrosystemsng.net/CellulantLive/transactionGate.svc.wsdl"/>
+    <system systemId="https://www.newconsole.smartmicrosystemsng.net/CellulantLive/transactionGate.svc?xsd=xsd0" uri="src/conf/xml-resources/web-service-references/transactionGate/wsdl/www.newconsole.smartmicrosystemsng.net/CellulantLive/transactionGate.svc.xsd_xsd0.xsd"/>
+    <system systemId="https://www.newconsole.smartmicrosystemsng.net/CellulantLive/transactionGate.svc?xsd=xsd1" uri="src/conf/xml-resources/web-service-references/transactionGate/wsdl/www.newconsole.smartmicrosystemsng.net/CellulantLive/transactionGate.svc.xsd_xsd1.xsd"/>
+    <system systemId="https://www.newconsole.smartmicrosystemsng.net/CellulantLive/transactionGate.svc?xsd=xsd2" uri="src/conf/xml-resources/web-service-references/transactionGate/wsdl/www.newconsole.smartmicrosystemsng.net/CellulantLive/transactionGate.svc.xsd_xsd2.xsd"/>
+    <system systemId="https://api.globalgatewaye4.firstdata.com/transaction/v12/wsdl" uri="src/conf/xml-resources/web-service-references/wsdl/wsdl/api.globalgatewaye4.firstdata.com/transaction/v12/wsdl.wsdl"/>
+    <system systemId="http://www.pagewallet.com/pfcsysmain/PFSTransactionService?wsdl" uri="src/conf/xml-resources/web-service-references/PFSTransactionService_1/wsdl/www.pagewallet.com/pfcsysmain/PFSTransactionService.wsdl"/>
+    <system systemId="http://www.pagewallet.com:80/pfcsysmain/PFSTransactionService?xsd=1" uri="src/conf/xml-resources/web-service-references/PFSTransactionService_1/wsdl/www.pagewallet.com_80/pfcsysmain/PFSTransactionService.xsd_1.xsd"/>
+</catalog>

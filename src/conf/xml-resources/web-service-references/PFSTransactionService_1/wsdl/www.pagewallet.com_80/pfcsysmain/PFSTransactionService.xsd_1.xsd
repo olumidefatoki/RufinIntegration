@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://sws.service.server.pfc.sddscorp.net/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://sws.service.server.pfc.sddscorp.net/">
+
+<xs:element name="PFCSException" type="tns:PFCSException"/>
+
+<xs:element name="getP2435" type="tns:getP2435"/>
+
+<xs:element name="getP2435Response" type="tns:getP2435Response"/>
+
+<xs:complexType name="getP2435">
+<xs:sequence>
+<xs:element name="arg0" type="tns:pfstReqData" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="pfstReqData">
+<xs:complexContent>
+<xs:extension base="tns:pfstResData">
+<xs:sequence>
+<xs:element name="accountno" type="xs:string" minOccurs="0"/>
+<xs:element name="feecharge" type="xs:double" minOccurs="0"/>
+<xs:element name="gatewayId" type="xs:string" minOccurs="0"/>
+<xs:element name="limit" type="xs:int"/>
+<xs:element name="ode" type="xs:string" minOccurs="0"/>
+<xs:element name="passId" type="xs:string" minOccurs="0"/>
+<xs:element name="referenceno" type="xs:string" minOccurs="0"/>
+<xs:element name="saccountname" type="xs:string" minOccurs="0"/>
+<xs:element name="saccountno" type="xs:string" minOccurs="0"/>
+<xs:element name="sbankname" type="xs:string" minOccurs="0"/>
+<xs:element name="sequenceNo" type="xs:string" minOccurs="0"/>
+<xs:element name="stan" type="xs:string" minOccurs="0"/>
+<xs:element name="taccountname" type="xs:string" minOccurs="0"/>
+<xs:element name="taccountno" type="xs:string" minOccurs="0"/>
+<xs:element name="tranAmount" type="xs:double" minOccurs="0"/>
+<xs:element name="tranDate" type="xs:string" minOccurs="0"/>
+<xs:element name="tranDesc" type="xs:string" minOccurs="0"/>
+<xs:element name="tranToken" type="xs:int" minOccurs="0"/>
+<xs:element name="tranType" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="pfstResData" abstract="true">
+<xs:sequence>
+<xs:element name="abalance" type="xs:double"/>
+<xs:element name="account_name" type="xs:string" minOccurs="0"/>
+<xs:element name="accounttype" type="xs:string" minOccurs="0"/>
+<xs:element name="authorization_num" type="xs:string" minOccurs="0"/>
+<xs:element name="lbalance" type="xs:double"/>
+<xs:element name="logonmessage" type="xs:string" minOccurs="0"/>
+<xs:element name="phoneno" type="xs:string" minOccurs="0"/>
+<xs:element name="resp_code" type="xs:string" minOccurs="0"/>
+<xs:element name="resp_message" type="xs:string" minOccurs="0"/>
+<xs:element name="statement" type="tns:pfsMiniStatements" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="transaction_error" type="xs:string" minOccurs="0"/>
+<xs:element name="transaction_message" type="xs:string" minOccurs="0"/>
+<xs:element name="transaction_status" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="pfsMiniStatements">
+<xs:sequence>
+<xs:element name="tranAmount" type="xs:double"/>
+<xs:element name="tranDate" type="xs:string" minOccurs="0"/>
+<xs:element name="tranDesc" type="xs:string" minOccurs="0"/>
+<xs:element name="tranType" type="xs:string" minOccurs="0"/>
+<xs:element name="tranref" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getP2435Response">
+<xs:sequence>
+<xs:element name="return" type="tns:pfstReqData" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="PFCSException">
+<xs:sequence>
+<xs:element name="data" type="xs:anyType" minOccurs="0"/>
+<xs:element name="errorCode" type="tns:exceptionErrorCode" minOccurs="0"/>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:simpleType name="exceptionErrorCode">
+<xs:restriction base="xs:string">
+<xs:enumeration value="SHOW_ERROR_MESSAGE"/>
+<xs:enumeration value="UNKNOWN_EXCEPTION"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>
