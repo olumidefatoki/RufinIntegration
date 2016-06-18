@@ -52,11 +52,11 @@ public class POMImplementation {
             response.setTransactionStatus(res.getTranDesc());
             
 
-            DBUtils.insert(MSISDN, referenceNo, arugement, platformId, mfb, actionId, "0", "0");
+           // DBUtils.insert(MSISDN, referenceNo, arugement, platformId, mfb, actionId, "0", "0");
             transactionResponse = " Account Name : " + response.getAccountName()+" Abalance : " +response.getAbalance();
           
             System.out.println(transactionResponse);
-            DBUtils.update(referenceNo, transactionResponse, actionId,res.getRespCode(),res.getRespMessage());
+          //  DBUtils.update(referenceNo, transactionResponse, actionId,res.getRespCode(),res.getRespMessage());
 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

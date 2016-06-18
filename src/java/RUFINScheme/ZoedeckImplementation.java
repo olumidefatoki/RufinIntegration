@@ -40,7 +40,7 @@ public class ZoedeckImplementation {
             param.append("&RefId=").append(referenceNo);
             param.append("&phoneNumber=").append(WalletCredentials.FormatMSISDN(MSISDN));
 
-            DBUtils.insert(MSISDN, referenceNo, arugement, platformId, mfb, actionId, "0", "0");
+            //DBUtils.insert(MSISDN, referenceNo, arugement, platformId, mfb, actionId, "0", "0");
             transactionResponse = sendSms(param.toString());
             
                 response = parseAccountQueryResponseXML(transactionResponse);
@@ -49,7 +49,7 @@ public class ZoedeckImplementation {
             System.out.println(transactionResponse);
 
             
-             DBUtils.update(referenceNo, transactionResponse, actionId,response.getResponseCode(),response.getResponseDescription());
+            // DBUtils.update(referenceNo, transactionResponse, actionId,response.getResponseCode(),response.getResponseDescription());
 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

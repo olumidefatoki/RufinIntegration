@@ -38,7 +38,7 @@ public class MambuImplementation {
             StringBuilder param = new StringBuilder();
             param.append(URL);
             param.append(accountNumber);
-            DBUtils.insert(MSISDN, referenceNo, arugement, platformId, mfb, actionId, "0", "0");
+            //DBUtils.insert(MSISDN, referenceNo, arugement, platformId, mfb, actionId, "0", "0");
             Client client = ClientBuilder.newClient();
             WebTarget target = client.target(param.toString());
             cbaResp = target.request(MediaType.APPLICATION_JSON).header("authorization", authentication).get();
@@ -56,7 +56,7 @@ public class MambuImplementation {
                 System.out.println("CBA Response: " + responseMessage);
             }
 
-            DBUtils.update(referenceNo, responseMessage, actionId, response.getResponseCode(), response.getResponseMessage());
+            //DBUtils.update(referenceNo, responseMessage, actionId, response.getResponseCode(), response.getResponseMessage());
 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -144,9 +144,49 @@ public class MambuImplementation {
         }
         return response;
     }
-
     
+    public Mambu transfer(String referenceNo, String MSISDN, String narration, String transactionAmount, String platformId, int mfb, String actionId, String fromAccountNumber,String toAccountNumber) {
+        
+        response = new Mambu();
+        
+         try {
+            double amt = Double.parseDouble(transactionAmount);
+        
+            StringBuilder param = new StringBuilder();
+            param.append(URL);
+            param.append(fromAccountNumber);
+            param.append("/transactions");
+            param.append("?type=TRANSFER");
+            param.append("&toSavingsAccount=").append(toAccountNumber);
+            param.append("&amount=").append(amt);
+            
+            System.out.println("URL " + param.toString());
+            DBUtils.insert(MSISDN, referenceNo, narration, platformId, mfb, actionId, transactionAmount, "0");
+            Client client = ClientBuilder.newClient();
+            WebTarget target = client.target(param.toString());
+            cbaResp = target.request(MediaType.APPLICATION_JSON).header("authorization", authentication).post(null);
+            responseCode = cbaResp.getStatus();
+            responseMessage = cbaResp.readEntity(String.class);
+            JSONObject obj = new JSONObject(responseMessage);
+            if (responseCode == 200 || responseCode == 201) {
+                response.setResponseCode("00");
+                response.setResponseMessage("Successful");
+                response.setCbatransactionID(String.valueOf(obj.getInt("transactionId")));
+                System.out.println("CBA Response : " + responseMessage);
 
+            } else {
+                response.setResponseCode(String.valueOf(obj.getInt("returnCode")));
+                response.setResponseMessage(obj.getString("returnStatus"));
+                System.out.println("CBA Response: " + responseMessage);
+            }
+
+            DBUtils.updatewithTransID(referenceNo, responseMessage, actionId, response.getResponseCode(), response.getResponseMessage(), response.getCbatransactionID());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return response;
+    }
+    
     public Mambu transactionReversal(String referenceNo, String MSISDN, String platformId, int mfb, String actionId, String accountNumber) {
         String  transType = null;
         response = new Mambu();
@@ -196,5 +236,11 @@ public class MambuImplementation {
         }
         return response;
 
+    }
+    
+    public static void main(String[] args) {
+        MambuImplementation test= new MambuImplementation();
+        test.transfer("11111", "2348060099476", "transfer", "100", "005", 2, "005", "AINE361", "ONDA468");
+        
     }
 }

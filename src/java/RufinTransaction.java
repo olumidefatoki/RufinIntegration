@@ -67,7 +67,7 @@ public class RufinTransaction extends HttpServlet {
                 case WalletCredentials.RufinSchemeID: {
 
                     RufinCustProfile rcp = DBUtils.getCBAID(sender, platformId);
-                       System.out.println("CBACode is " + rcp.getCBAcode());
+                    System.out.println("CBACode is " + rcp.getCBAcode());
 
                     switch (rcp.getCBAcode()) {
 
@@ -117,7 +117,7 @@ public class RufinTransaction extends HttpServlet {
 
                                 }
                                 break;
-                                     case "006": {
+                                case "006": {
                                     //ATM  Transaction, POS Card Transaction
 
                                     RufinSmartMicro fundTransferAccountDebit = smi.fundTransferAccountDebit(refId, sender, narration, amount, fee, "", rcp.getCBAcode(), rcp.getMFB(), action);
@@ -132,7 +132,7 @@ public class RufinTransaction extends HttpServlet {
                                     }
 
                                 }
-                                break; 
+                                break;
                                 case "016": {
                                     //Balance Inquiry
 
@@ -232,7 +232,7 @@ public class RufinTransaction extends HttpServlet {
                                     }
                                 }
                                 break;
-                                     case "006": {
+                                case "006": {
                                     //ATM  Transaction, POS Card Transaction
                                     Zoedeck accountDebit = zi.accountDebit(refId, sender, narration, amount, "100", rcp.getCBAcode(), rcp.getMFB(), action);
                                     try {
@@ -273,7 +273,7 @@ public class RufinTransaction extends HttpServlet {
                                     } catch (Exception e) {
                                         out.println("25");
                                     }
-                                } 
+                                }
                                 break;
                                 case "RVL": {
                                     //Reversal
@@ -346,7 +346,7 @@ public class RufinTransaction extends HttpServlet {
 
                                 }
                                 break;
-                                    case "006": {
+                                case "006": {
                                     //ATM  Transaction, POS Card Transaction
 
                                     POM accountDebit = myPomCba.accountDebit(refId, sender, narration, amount, fee, rcp.getCBAcode(), rcp.getMFB(), action, rcp.getAccountNumber());
@@ -465,7 +465,7 @@ public class RufinTransaction extends HttpServlet {
 
                                 }
                                 break;
-                                     case "006": {
+                                case "006": {
                                     //ATM  Transaction, POS Card Transaction
 
                                     VINO accountDebit = myVin.accountDebit(refId, sender, narration, amount, fee, rcp.getCBAcode(), rcp.getMFB(), action);
@@ -526,23 +526,22 @@ public class RufinTransaction extends HttpServlet {
                                     }
 
                                 }
-                            
-                                    
-                            break;
+
+                                break;
                                 default:
                                     out.println("25");
                                     System.out.println(" Action  Details does not exist");
                                     break;
                             }
                             break;
-                                    
-                                    case WalletCredentials.mambuCBACode:
 
-                               MambuImplementation myMambu = new MambuImplementation();
+                        case WalletCredentials.mambuCBACode:
+
+                            MambuImplementation myMambu = new MambuImplementation();
                             switch (action) {
                                 case "007": {
                                     // Airtime Purchase   
-                                    Mambu accountDebit = myMambu.accountDebit(refId, sender, narration, amount, "0", rcp.getCBAcode(), rcp.getMFB(), action,rcp.getAccountNumber());
+                                    Mambu accountDebit = myMambu.accountDebit(refId, sender, narration, amount, "0", rcp.getCBAcode(), rcp.getMFB(), action, rcp.getAccountNumber());
                                     try {
                                         if (accountDebit.getResponseCode().equals("00")) {
                                             out.println("00");
@@ -557,7 +556,7 @@ public class RufinTransaction extends HttpServlet {
                                 break;
                                 case "008": {
                                     //Bill Payment
-                                    Mambu accountDebit = myMambu.accountDebit(refId, sender, narration, amount, fee, rcp.getCBAcode(), rcp.getMFB(), action,rcp.getAccountNumber());
+                                    Mambu accountDebit = myMambu.accountDebit(refId, sender, narration, amount, fee, rcp.getCBAcode(), rcp.getMFB(), action, rcp.getAccountNumber());
                                     try {
                                         if (accountDebit.getResponseCode().equals("00")) {
                                             out.println("00");
@@ -570,10 +569,11 @@ public class RufinTransaction extends HttpServlet {
 
                                 }
                                 break;
+                                    
                                 case "010": {
                                     //Trasfer to Bank
 
-                                     Mambu accountDebit = myMambu.accountDebit(refId, sender, narration, amount, fee, rcp.getCBAcode(), rcp.getMFB(), action,rcp.getAccountNumber());
+                                    Mambu accountDebit = myMambu.accountDebit(refId, sender, narration, amount, fee, rcp.getCBAcode(), rcp.getMFB(), action, rcp.getAccountNumber());
                                     try {
                                         if (accountDebit.getResponseCode().equals("00")) {
                                             out.println("00");
@@ -585,12 +585,32 @@ public class RufinTransaction extends HttpServlet {
                                     }
 
                                 }
-                                break;                                    
+                                break;
+                                    
+                                 case "005": {
+                                    //Peer to peer
+                                      String fromAccountNumber=rcp.getAccountNumber();
+                                    String toAccountNumber= DBUtils.getCBAID(receiver,platformId).getAccountNumber(); 
+                                    System.out.println("fromAccountNumber " + fromAccountNumber);
+                                    System.out.println("toaccountNumber " + toAccountNumber);
+                                    Mambu accountDebit = myMambu.transfer(refId, sender, narration, amount, rcp.getCBAcode(), rcp.getMFB(), action,fromAccountNumber ,toAccountNumber);
+                                    try {
+                                        if (accountDebit.getResponseCode().equals("00")) {
+                                            out.println("00");
+                                        } else {
+                                            out.println("25");
+                                        }
+                                    } catch (Exception e) {
+                                        out.println("25");
+                                    }
 
-                                        case "006": {
+                                }
+                                break;    
+
+                                case "006": {
                                     //ATM  Transaction, POS Card Transaction
 
-                                     Mambu accountDebit = myMambu.accountDebit(refId, sender, narration, amount, fee, rcp.getCBAcode(), rcp.getMFB(), action,rcp.getAccountNumber());
+                                    Mambu accountDebit = myMambu.accountDebit(refId, sender, narration, amount, fee, rcp.getCBAcode(), rcp.getMFB(), action, rcp.getAccountNumber());
                                     try {
                                         if (accountDebit.getResponseCode().equals("00")) {
                                             out.println("00");
@@ -602,11 +622,12 @@ public class RufinTransaction extends HttpServlet {
                                     }
 
                                 }
-                                break;  
+                                break;
+                                    
                                 case "016": {
                                     //Balance Inquiry
                                     try {
-                                         Mambu accountQuery = myMambu.accountQuery(refId, sender, rcp.getCBAcode(), rcp.getMFB(), action,rcp.getAccountNumber());
+                                        Mambu accountQuery = myMambu.accountQuery(refId, sender, rcp.getCBAcode(), rcp.getMFB(), action, rcp.getAccountNumber());
                                         if (accountQuery.getResponseCode().equals("00")) {
                                             out.println(accountQuery.getAcctBalance());
                                         } else {
@@ -618,10 +639,11 @@ public class RufinTransaction extends HttpServlet {
 
                                 }
                                 break;
+                                    
                                 case "002": {
                                     //Credit
 
-                                    Mambu accountCredit = myMambu.accountCredit(refId, sender, narration, amount, rcp.getCBAcode(), rcp.getMFB(), action,rcp.getAccountNumber());
+                                    Mambu accountCredit = myMambu.accountCredit(refId, sender, narration, amount, rcp.getCBAcode(), rcp.getMFB(), action, rcp.getAccountNumber());
                                     try {
                                         if (accountCredit.getResponseCode().equals("00")) {
                                             out.println("00");
@@ -634,9 +656,10 @@ public class RufinTransaction extends HttpServlet {
 
                                 }
                                 break;
+                                    
                                 case "RVL": {
                                     //Reversal Transaction     
-                                     Mambu transactionReversal = myMambu.transactionReversal(refId, sender, rcp.getCBAcode(), rcp.getMFB(), action,rcp.getAccountNumber());
+                                    Mambu transactionReversal = myMambu.transactionReversal(refId, sender, rcp.getCBAcode(), rcp.getMFB(), action, rcp.getAccountNumber());
                                     try {
                                         if (transactionReversal.getResponseCode().equals("00")) {
                                             out.println("00");
@@ -649,6 +672,7 @@ public class RufinTransaction extends HttpServlet {
 
                                 }
                                 break;
+                                    
                                 default:
                                     out.println("25");
                                     System.out.println(" Action  Details does not exist");

@@ -42,7 +42,7 @@ public class RufinSmartMicroImplemation {
             //use this method to call accountQuery
             arugement="Account Query Request";
             
-            DBUtils.insert(MSISDN,referenceNo , arugement,platformId,mfb,actionId,"0","0");
+            //DBUtils.insert(MSISDN,referenceNo , arugement,platformId,mfb,actionId,"0","0");
             transactionResponse = tGate.accountQuery(clientID, PASSWORD, referenceNo, WalletCredentials.FormatMSISDN(MSISDN), "");
             
              System.out.println(transactionResponse);
@@ -54,7 +54,7 @@ public class RufinSmartMicroImplemation {
              else{
             parseAccountQueryResponseXML = parseAccountQueryResponseXML(transactionResponse);
              }
-             DBUtils.update(referenceNo, transactionResponse,actionId,parseAccountQueryResponseXML.getResponseCode(),parseAccountQueryResponseXML.getResponseMessage());
+           //  DBUtils.update(referenceNo, transactionResponse,actionId,parseAccountQueryResponseXML.getResponseCode(),parseAccountQueryResponseXML.getResponseMessage());
            
         } catch (Exception ex) {
             System.out.println("Error : " + ex.getMessage());

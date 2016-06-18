@@ -30,7 +30,7 @@ public class VINOImplementation {
        
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
-            msconn = DriverManager.getConnection("jdbc:sqlserver://87.236.221.10:1433;databaseName=MicroFinance", "CompAcct", "comp");
+            msconn = DriverManager.getConnection("jdbc:sqlserver://178.239.50.59:1433;databaseName=MicroFinance", "CompAcct", "comp");
 
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
             System.out.println("Error : " + ex.getMessage());
@@ -56,7 +56,7 @@ public class VINOImplementation {
             arugement = "Account Query Request";
             StringBuilder param = new StringBuilder();
 
-            DBUtils.insert(MSISDN, referenceNo, arugement, platformId, mfb, actionId, "0", "0");
+            //DBUtils.insert(MSISDN, referenceNo, arugement, platformId, mfb, actionId, "0", "0");
 
             Connection con = createConnection();
             CallableStatement cstmt = con.prepareCall("{ call Accountquery (?,?)}");
@@ -78,7 +78,7 @@ public class VINOImplementation {
                 ResponseDescription = "Failed";
             }
 
-            DBUtils.update(referenceNo, transactionResponse, actionId, ResponseCode, ResponseDescription);
+            //DBUtils.update(referenceNo, transactionResponse, actionId, ResponseCode, ResponseDescription);
             response.setBalance(Double.parseDouble(Balance));
             response.setResponseCode(ResponseCode);
              
